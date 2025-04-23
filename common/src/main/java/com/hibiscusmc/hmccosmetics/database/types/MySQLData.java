@@ -31,7 +31,7 @@ public class MySQLData extends SQLData {
     @Override
     public void setup() {
         host = System.getenv("MARIADB_HOST");
-        user = System.getenv("MARIADB_USERNAME");
+        user = System.getenv("MARIADB_USER");
         database = DatabaseSettings.getDatabase();
         password = System.getenv("MARIADB_PASSWORD");
         port = Integer.parseInt(System.getenv("MARIADB_PORT"));

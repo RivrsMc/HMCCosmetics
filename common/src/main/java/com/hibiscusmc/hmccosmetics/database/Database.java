@@ -19,11 +19,6 @@ public class Database {
     private static final MySQLData MYSQL_DATA = new MySQLData();
 
     public Database() {
-        String host = System.getenv("MARIADB_HOST");
-        String portParse = System.getenv("MARIADB_PORT");
-        String username = System.getenv("MARIADB_USERNAME");
-        String password = System.getenv("MARIADB_PASSWORD");
-
         data = MYSQL_DATA;
 
         setup();
