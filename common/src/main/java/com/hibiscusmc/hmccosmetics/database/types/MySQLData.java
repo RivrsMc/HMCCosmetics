@@ -1,12 +1,5 @@
 package com.hibiscusmc.hmccosmetics.database.types;
 
-import com.hibiscusmc.hmccosmetics.HMCCosmeticsPlugin;
-import com.hibiscusmc.hmccosmetics.config.DatabaseSettings;
-import com.hibiscusmc.hmccosmetics.util.MessagesUtil;
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +7,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
+
+import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import com.hibiscusmc.hmccosmetics.HMCCosmeticsPlugin;
+import com.hibiscusmc.hmccosmetics.config.DatabaseSettings;
+import com.hibiscusmc.hmccosmetics.util.MessagesUtil;
 
 public class MySQLData extends SQLData {
 
@@ -29,20 +30,21 @@ public class MySQLData extends SQLData {
 
     @Override
     public void setup() {
-        host = DatabaseSettings.getHost();
-        user = DatabaseSettings.getUsername();
+        host = System.getenv("MARIADB_HOST");
+        user = System.getenv("MARIADB_USERNAME");
         database = DatabaseSettings.getDatabase();
-        password = DatabaseSettings.getPassword();
-        port = DatabaseSettings.getPort();
+        password = System.getenv("MARIADB_PASSWORD");
+        port = Integer.parseInt(System.getenv("MARIADB_PORT"));
 
         HMCCosmeticsPlugin plugin = HMCCosmeticsPlugin.getInstance();
         try {
             openConnection();
-            if (connection == null) throw new NullPointerException("Connection is null");
+            if (connection == null)
+                throw new NullPointerException("Connection is null");
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `COSMETICDATABASE` " +
-                    "(UUID varchar(36) PRIMARY KEY, " +
-                    "COSMETICS MEDIUMTEXT " +
-                    ");").execute();
+                                        "(UUID varchar(36) PRIMARY KEY, " +
+                                        "COSMETICS MEDIUMTEXT " +
+                                        ");").execute();
         } catch (SQLException | NullPointerException e) {
             plugin.getLogger().severe("");
             plugin.getLogger().severe("");
@@ -70,7 +72,8 @@ public class MySQLData extends SQLData {
             } finally {
                 try {
                     if (preparedSt != null) preparedSt.close();
-                } catch (SQLException e) {}
+                } catch (SQLException e) {
+                }
             }
         });
     }

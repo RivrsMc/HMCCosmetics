@@ -224,7 +224,7 @@ public final class HMCCosmeticsPlugin extends HibiscusPlugin {
         getInstance().getLogger().info(Cosmetics.values().size() + " Cosmetics Successfully Setup");
         getInstance().getLogger().info(Menus.getMenuNames().size() + " Menus Successfully Setup");
         getInstance().getLogger().info(WardrobeSettings.getWardrobes().size() + " Wardrobes Successfully Setup");
-        getInstance().getLogger().info("Data storage is set to " + DatabaseSettings.getDatabaseType());
+        getInstance().getLogger().info("Data storage is set to MySQL");
 
         Bukkit.getPluginManager().callEvent(new HMCCosmeticSetupEvent());
     }
